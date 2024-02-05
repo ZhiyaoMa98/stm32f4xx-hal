@@ -81,6 +81,7 @@ pub use stm32f4::stm32f469 as pac;
 /// Re-export of the [svd2rust](https://crates.io/crates/svd2rust) auto-generated API for the stm32f469 peripherals.
 pub use stm32f4::stm32f469 as pac;
 
+#[cfg(feature = "rt")]
 // Enable use of interrupt macro
 pub use crate::pac::interrupt;
 
