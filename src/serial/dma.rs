@@ -437,9 +437,12 @@ where
     }
 
     fn handle_error_interrupt(&mut self) {
-        let res = <Serial_ as Instance>::RegisterBlock::check_and_clear_error_flags(
-            self.hal_serial.tx.usart.deref(),
-        );
+        let res = self
+            .hal_serial
+            .tx
+            .usart
+            .deref()
+            .check_and_clear_error_flags();
         if let Err(e) = res {
             self.finish_transfer_with_result(Err(Error::SerialError(e)));
         }
@@ -476,9 +479,12 @@ where
     }
 
     fn handle_error_interrupt(&mut self) {
-        let res = <Serial_ as Instance>::RegisterBlock::check_and_clear_error_flags(
-            self.hal_serial.tx.usart.deref(),
-        );
+        let res = self
+            .hal_serial
+            .tx
+            .usart
+            .deref()
+            .check_and_clear_error_flags();
         if let Err(e) = res {
             self.finish_transfer_with_result(Err(Error::SerialError(e)));
         }
@@ -552,9 +558,12 @@ where
     }
 
     fn handle_error_interrupt(&mut self) {
-        let res = <Serial_ as Instance>::RegisterBlock::check_and_clear_error_flags(
-            self.hal_serial.tx.usart.deref(),
-        );
+        let res = self
+            .hal_serial
+            .tx
+            .usart
+            .deref()
+            .check_and_clear_error_flags();
         if let Err(e) = res {
             self.finish_transfer_with_result(Err(Error::SerialError(e)));
         }
