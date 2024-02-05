@@ -16,7 +16,7 @@
 
 use crate::pac;
 
-use crate::serial::uart_impls::RegisterBlockUart;
+use crate::serial::uart_impls::{RegisterBlockImpl, RegisterBlockUart};
 
 pub use crate::serial::{config, Error, Event, Instance, NoRx, NoTx, Rx, RxISR, Serial, Tx, TxISR};
 pub use config::Config;
@@ -51,6 +51,10 @@ macro_rules! halUart {
                         StopBits::STOP2 => STOP_A::Stop2,
                     })
                 });
+            }
+
+            fn peri_address() -> u32 {
+                unsafe { (*Self::ptr()).peri_address() }
             }
         }
     };
