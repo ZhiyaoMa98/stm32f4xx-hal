@@ -57,6 +57,20 @@ pub trait RegisterBlockImpl: crate::Sealed {
 
     fn flush(&self) -> nb::Result<(), Error>;
 
+    fn bread_all_u8(&self, buffer: &mut [u8]) -> Result<(), Error> {
+        for b in buffer.iter_mut() {
+            *b = nb::block!(self.read_u8())?;
+        }
+        Ok(())
+    }
+
+    fn bread_all_u16(&self, buffer: &mut [u16]) -> Result<(), Error> {
+        for b in buffer.iter_mut() {
+            *b = nb::block!(self.read_u16())?;
+        }
+        Ok(())
+    }
+
     fn bwrite_all_u8(&self, buffer: &[u8]) -> Result<(), Error> {
         for &b in buffer {
             nb::block!(self.write_u8(b))?;

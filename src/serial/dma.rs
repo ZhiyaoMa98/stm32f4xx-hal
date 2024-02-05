@@ -8,7 +8,6 @@ use crate::dma::{
 };
 use crate::ReadFlags;
 
-use embedded_hal_nb::serial::{Read, Write};
 use nb;
 
 #[non_exhaustive]
@@ -374,15 +373,12 @@ where
         }
     }
 
-    pub fn write(&mut self, bytes: &[u8]) -> nb::Result<(), super::Error> {
-        for b in bytes {
-            self.hal_serial.write(*b)?;
-        }
-        Ok(())
+    pub fn write(&mut self, bytes: &[u8]) -> Result<(), super::Error> {
+        self.hal_serial.tx.usart.deref().bwrite_all_u8(bytes)
     }
 
-    pub fn read(&mut self) -> nb::Result<u8, super::Error> {
-        self.hal_serial.read()
+    pub fn read(&mut self, bytes: &mut [u8]) -> Result<(), super::Error> {
+        self.hal_serial.tx.usart.deref().bread_all_u8(bytes)
     }
 
     fn enable_error_interrupt_generation(&mut self) {
