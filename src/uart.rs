@@ -79,6 +79,10 @@ impl Instance for pac::UART4 {
     fn set_stopbits(&self, _bits: config::StopBits) {
         todo!()
     }
+
+    fn peri_address() -> u32 {
+        unsafe { (*Self::ptr()).peri_address() }
+    }
 }
 
 #[cfg(feature = "uart5")]
