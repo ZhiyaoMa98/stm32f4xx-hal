@@ -449,6 +449,9 @@ impl<I2C: Instance> I2c<I2C> {
             // Receive last byte
             *last = self.recv_byte()?;
 
+            // Wait for the STOP to be sent.
+            while self.i2c.cr1.read().stop().bit_is_set() {}
+
             // Fallthrough is success
             Ok(())
         } else {
@@ -468,6 +471,9 @@ impl<I2C: Instance> I2c<I2C> {
         // Send a STOP condition
         self.i2c.cr1.modify(|_, w| w.stop().set_bit());
 
+        // Wait for STOP condition to transmit.
+        while self.i2c.cr1.read().stop().bit_is_set() {}
+
         // Fallthrough is success
         Ok(())
     }
@@ -481,6 +487,9 @@ impl<I2C: Instance> I2c<I2C> {
 
         // Send a STOP condition
         self.i2c.cr1.modify(|_, w| w.stop().set_bit());
+
+        // Wait for STOP condition to transmit.
+        while self.i2c.cr1.read().stop().bit_is_set() {}
 
         // Fallthrough is success
         Ok(())
